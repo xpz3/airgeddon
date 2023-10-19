@@ -1,3 +1,6 @@
+### 12.0
+ - Added 6Ghz partial support (some scans, some attacks, card detection, etc.)
+
 ### 11.22
  - Improvement on process killing on Evil Twin attacks
 
