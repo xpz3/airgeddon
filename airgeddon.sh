@@ -381,7 +381,16 @@ crunch_symbolcharset="!#$%/=?{}[]-*:;"
 hashcat_charsets=("?l" "?u" "?d" "?s")
 
 #Tmux vars
-session_name="airgeddon"
+if [[ "${1}" == "true" ]]; then
+	if [[ "${2}" != "" ]]; then
+		airgeddon_uid="${2}"
+	else
+		exit 0
+	fi
+else
+	airgeddon_uid="${BASHPID}"
+fi
+session_name="airgeddon${airgeddon_uid}"
 tmux_main_window="airgeddon-Main"
 no_hardcore_exit=0
 
@@ -16191,7 +16200,7 @@ function start_airgeddon_from_tmux() {
 	debug_print
 
 	tmux rename-window -t "${session_name}" "${tmux_main_window}"
-	tmux send-keys -t "${session_name}:${tmux_main_window}" "clear;cd ${scriptfolder};bash ${scriptname}" ENTER
+	tmux send-keys -t "${session_name}:${tmux_main_window}" "clear;cd ${scriptfolder};bash ${scriptname} true ${airgeddon_uid}" ENTER
 	sleep 0.2
 	if [ "${1}" = "normal" ]; then
 		tmux attach -t "${session_name}"
